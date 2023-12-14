@@ -3,11 +3,16 @@ package com.team1.jbugger.Entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Roles")
@@ -27,7 +32,8 @@ public class Roles {
     private List<Permissions> permissions = new ArrayList<>();
 
 
-    public Roles(String type) {
+    public Roles(int idRole, String type) {
+        this.idRole = idRole;
         this.type = type;
     }
 

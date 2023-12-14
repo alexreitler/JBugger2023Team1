@@ -3,12 +3,16 @@ package com.team1.jbugger.Entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Users")
@@ -40,7 +44,8 @@ public class Users {
     )
     private List<Roles> roles = new ArrayList<>();
 
-    public Users(String firstName, String lastName, String mobileNumber, String email, String username, String password, String status) {
+    public Users(int idUser, String firstName, String lastName, String mobileNumber, String email, String username, String password, String status) {
+        this.idUser = idUser;
         this.firstName = firstName;
         this.lastName = lastName;
         this.mobileNumber = mobileNumber;

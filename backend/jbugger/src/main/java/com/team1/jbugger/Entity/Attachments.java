@@ -2,9 +2,13 @@ package com.team1.jbugger.Entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Attachments")
@@ -17,7 +21,8 @@ public class Attachments {
     @JoinColumn(name = "idBug")
     private Bugs bug;
 
-    public Attachments(byte[] attContent) {
+    public Attachments(int idAtt, byte[] attContent) {
+        this.idAtt = idAtt;
         this.attContent = attContent;
     }
 }

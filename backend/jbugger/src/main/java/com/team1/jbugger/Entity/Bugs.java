@@ -3,6 +3,8 @@ package com.team1.jbugger.Entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,6 +12,8 @@ import java.util.List;
 
 
 @Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Bugs")
@@ -37,7 +41,8 @@ public class Bugs {
     @OneToMany(mappedBy = "bug", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Attachments> comments = new ArrayList<>();
 
-    public Bugs(String title, String description, String version, LocalDate targetDate, String status, String fixedVersion, String severity) {
+    public Bugs(int idBug, String title, String description, String version, LocalDate targetDate, String status, String fixedVersion, String severity) {
+        this.idBug = idBug;
         this.title = title;
         this.description = description;
         this.version = version;

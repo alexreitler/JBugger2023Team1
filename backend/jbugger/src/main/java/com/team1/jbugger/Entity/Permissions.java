@@ -20,11 +20,13 @@ public class Permissions {
     @ManyToMany(mappedBy = "permissions")
     private List<Roles> roles = new ArrayList<>();
 
-    public Permissions(String type) {
+    public Permissions(String type)
+    {
         this.type = type;
     }
 
-    public void setRoles(List<Roles> roles) {
+    public void setRoles(List<Roles> roles)
+    {
         this.roles = roles;
     }
 }

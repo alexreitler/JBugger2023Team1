@@ -2,12 +2,16 @@ package com.team1.jbugger.Entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Notifications")
@@ -21,7 +25,8 @@ public class Notifications {
     @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<User_Notification> user_notifications = new ArrayList<>();
 
-    public Notifications(String type, String urlOrBugId, String message) {
+    public Notifications(int idNotification, String type, String urlOrBugId, String message) {
+        this.idNotification = idNotification;
         this.type = type;
         UrlOrBugId = urlOrBugId;
         this.message = message;
