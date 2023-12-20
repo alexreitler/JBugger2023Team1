@@ -32,7 +32,7 @@ public class Bugs {
     @JoinColumn(name = "createdByUser")
     private Users userCreated;
     @ManyToOne
-    @JoinColumn(name = "assignatedToUser")
+    @JoinColumn(name = "assignedTo")
     private Users userAssigned;
     @OneToMany(mappedBy = "bug", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Attachments> attachments = new ArrayList<>();

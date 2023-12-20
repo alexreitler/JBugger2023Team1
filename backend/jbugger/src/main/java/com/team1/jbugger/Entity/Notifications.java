@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Notifications")
+@Table(name = "Notification")
 public class Notifications {
     @Id
     @GeneratedValue
