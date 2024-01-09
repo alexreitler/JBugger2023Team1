@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Getter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 @Entity
@@ -49,6 +51,14 @@ public class Users {
     )
     private List<Roles> roles = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_notification",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "notificationId")
+    )
+    private Set<Notifications> notifications = new HashSet<>();
+
     public Users(int idUser, String firstName, String lastName, String mobileNumber, String email, String username, String password, boolean status) {
         this.idUser = idUser;
         this.firstName = firstName;
@@ -60,9 +70,9 @@ public class Users {
         this.status = status;
     }
 
-    public void setNotifications(List<User_Notification> user_notifications) {
-        this.user_notifications = user_notifications;
-    }
+//    public void setNotifications(List<User_Notification> user_notifications) {
+//        this.user_notifications = user_notifications;
+//    }
 
     public void setBug_created(List<Bugs> bug_created) {
         this.bug_created = bug_created;
@@ -82,5 +92,34 @@ public class Users {
 
     public boolean getStatus() {
         return this.status;
+    }
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (Roles role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getType().toString()));
+        }
+        return authorities;
+    }
+
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    public String UserInformationWithoutPassword() {
+        return String.format("User Information: FirstName = '%s, LastName = %s', Email = '%s', Username = '%s', Telephone Number = '%s', Roles = '%s'",
+                firstName, lastName, email, username, mobileNumber, roles.toString());
+    }
+    public String UserInformationWithPassword() {
+        return String.format("User Information: FirstName = '%s, LastName = %s', Email = '%s', Username = '%s', Password = '%s', Telephone Number = '%s', Roles = '%s'",
+                firstName, lastName, email, username, password, mobileNumber, roles.toString());
     }
 }

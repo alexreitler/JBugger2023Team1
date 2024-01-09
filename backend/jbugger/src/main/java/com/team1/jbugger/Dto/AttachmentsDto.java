@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AttachementsDto {
+public class AttachmentsDto {
     private int idAtt;
-    private String attContent;
+    private byte[] attContent;
 }

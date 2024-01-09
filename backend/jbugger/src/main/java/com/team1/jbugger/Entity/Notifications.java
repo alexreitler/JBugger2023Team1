@@ -1,14 +1,14 @@
 package com.team1.jbugger.Entity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-
+@Data
+@Builder
 @Entity
 @Getter
 @Setter
@@ -23,8 +23,15 @@ public class Notifications {
     private String UrlOrBugId;
     private String message;
 
+
     @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<User_Notification> user_notifications = new ArrayList<>();
+
+    @ManyToMany(
+            targetEntity = Users.class,
+            mappedBy = "notifications"
+    )
+    private Set<Users> users = new HashSet<>();
 
     public Notifications(int idNotification, String type, String urlOrBugId, String message) {
         this.idNotification = idNotification;
@@ -33,7 +40,4 @@ public class Notifications {
         this.message = message;
     }
 
-    public void setUser_notifications(List<User_Notification> user_notifications) {
-        this.user_notifications = user_notifications;
-    }
 }

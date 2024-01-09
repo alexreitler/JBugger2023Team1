@@ -15,8 +15,12 @@ public class User_Information {
     private boolean enabled_or_not;
     private List<Roles> roles;
 
-
-    public String User_Information_Format() {
-        return String.format("Name = '%s %s', Email = '%s', Username = '%s', Password = '%s', Phone Number = '%s', Roles = '%s'", firstName, lastName, email, username, password, mobileNumber, roles.toString());
+    public String UserInformationWithoutPassword() {
+        return String.format("User Information: FirstName = '%s, LastName = %s', Email = '%s', Username = '%s', Telephone Number = '%s', Roles = '%s'",
+                firstName, lastName, email, username, mobileNumber, roles.toString());
+    }
+    public String UserInformationWithPassword() {
+        return String.format("User Information: FirstName = '%s, LastName = %s', Email = '%s', Username = '%s', Password = '%s', Telephone Number = '%s', Roles = '%s'",
+                firstName, lastName, email, username, password, mobileNumber, roles.toString());
     }
 }

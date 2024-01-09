@@ -11,7 +11,9 @@ import com.team1.jbugger.Enums.BugSeverity;
 import javax.xml.stream.events.Comment;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -41,13 +43,13 @@ public class Bugs {
     private Users userAssigned;
 
     @OneToMany(mappedBy = "bug", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Attachments> attachments = new ArrayList<>();
+    private Set<Attachments> attachments = new HashSet<>();
 
     @OneToMany(mappedBy = "bug", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Attachments> history = new ArrayList<>();
+    private Set<History> history = new HashSet<>();
 
     @OneToMany(mappedBy = "bug", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Attachments> comments = new ArrayList<>();
+    private Set<Comments> comments = new HashSet<>();
 
     public Bugs(int idBug, String title, String description, String version, LocalDate targetDate, BugStatus status, String fixedVersion, BugSeverity severity) {
         this.idBug = idBug;
@@ -59,16 +61,20 @@ public class Bugs {
         this.fixedVersion = fixedVersion;
         this.severity = severity;
     }
+    public String bugInfo() {
+        return String.format("#%s, Title = '%s', Version = '%s', Severity = '%s'",
+                getIdBug(), title, version, severity);
+    }
 
-    public void setAttachments(List<Attachments> attachments) {
+    public void setAttachments(Set<Attachments> attachments) {
         this.attachments = attachments;
     }
 
-    public void setHistory(List<Attachments> history) {
+    public void setHistory(Set<History> history) {
         this.history = history;
     }
 
-    public void setComments(List<Attachments> comments) {
+    public void setComments(Set<Comments> comments) {
         this.comments = comments;
     }
 }
