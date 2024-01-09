@@ -16,5 +16,9 @@ public class UsersDto {
     private String email;
     private String username;
     private String password;
-    private String status;
+    private boolean status;
+
+    public boolean getStatus() {
+        return this.status;
+    }
 }

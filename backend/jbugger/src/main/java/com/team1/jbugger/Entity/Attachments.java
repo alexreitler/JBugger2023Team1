@@ -16,12 +16,13 @@ public class Attachments {
     @Id
     @GeneratedValue
     private int idAtt;
-    private byte[] attContent;
+    private String attContent;
+
     @ManyToOne
     @JoinColumn(name = "idBug")
     private Bugs bug;
 
-    public Attachments(int idAtt, byte[] attContent) {
+    public Attachments(int idAtt, String attContent) {
         this.idAtt = idAtt;
         this.attContent = attContent;
     }

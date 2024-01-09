@@ -3,6 +3,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.team1.jbugger.Enums.*;
 
 import java.time.LocalDate;
 
@@ -16,7 +17,7 @@ public class BugsDto {
     private String description;
     private String version;
     private LocalDate targetDate;;
-    private String status;
+    private BugStatus status;
     private String fixedVersion;
-    private String severity;
+    private BugSeverity severity;
 }

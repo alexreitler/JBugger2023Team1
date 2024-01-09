@@ -17,11 +17,12 @@ import java.util.List;
 @Table(name = "Notification")
 public class Notifications {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int idNotification;
     private String type;
     private String UrlOrBugId;
     private String message;
+
     @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<User_Notification> user_notifications = new ArrayList<>();
 

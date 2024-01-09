@@ -5,7 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import com.team1.jbugger.Enums.BugStatus;
+import com.team1.jbugger.Enums.BugSeverity;
 
+import javax.xml.stream.events.Comment;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,29 +22,34 @@ import java.util.List;
 @Table(name = "Bugs")
 public class Bugs {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int idBug;
     private String title;
     private String description;
     private String version;
     private LocalDate targetDate;;
-    private String status;
+    private BugStatus status;
     private String fixedVersion;
-    private String severity;
+    private BugSeverity severity;
+
     @ManyToOne
     @JoinColumn(name = "createdByUser")
     private Users userCreated;
+
     @ManyToOne
     @JoinColumn(name = "assignedTo")
     private Users userAssigned;
+
     @OneToMany(mappedBy = "bug", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Attachments> attachments = new ArrayList<>();
+
     @OneToMany(mappedBy = "bug", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Attachments> history = new ArrayList<>();
+
     @OneToMany(mappedBy = "bug", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Attachments> comments = new ArrayList<>();
 
-    public Bugs(int idBug, String title, String description, String version, LocalDate targetDate, String status, String fixedVersion, String severity) {
+    public Bugs(int idBug, String title, String description, String version, LocalDate targetDate, BugStatus status, String fixedVersion, BugSeverity severity) {
         this.idBug = idBug;
         this.title = title;
         this.description = description;

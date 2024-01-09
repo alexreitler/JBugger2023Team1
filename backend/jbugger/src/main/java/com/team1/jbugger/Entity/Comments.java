@@ -15,13 +15,15 @@ import java.time.LocalDate;
 @Table(name = "Comments")
 public class Comments {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int idComment;
     private String text;
     private LocalDate date;
+
     @ManyToOne
     @JoinColumn(name = "idBug")
     private Bugs bug;
+
     @ManyToOne
     @JoinColumn(name = "idUser")
     private Users user;

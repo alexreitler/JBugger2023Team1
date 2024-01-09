@@ -14,12 +14,14 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "User_Notification")
-public class User_Notification {
+public class User_Notification
+{
     @Id
     @ManyToOne
     @JoinColumn(name = "idNotification")
     private Notifications notification;
     private LocalDate date;
+
     @ManyToOne
     @JoinColumn(name = "userId")
     private Users user;

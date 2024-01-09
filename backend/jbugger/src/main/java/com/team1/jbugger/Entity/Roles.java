@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
+import com.team1.jbugger.Enums.RoleType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +18,14 @@ import java.util.List;
 @Table(name = "Roles")
 public class Roles {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int idRole;
-    private String type;
+
+    private RoleType type;
+
     @ManyToMany(mappedBy = "roles")
     private List<Users> users = new ArrayList<>();
+
     @ManyToMany
     @JoinTable(
             name = "Roles_Permissions",
@@ -32,7 +35,7 @@ public class Roles {
     private List<Permissions> permissions = new ArrayList<>();
 
 
-    public Roles(int idRole, String type) {
+    public Roles(int idRole, RoleType type) {
         this.idRole = idRole;
         this.type = type;
     }
