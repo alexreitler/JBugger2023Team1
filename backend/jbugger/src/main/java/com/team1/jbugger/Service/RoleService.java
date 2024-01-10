@@ -56,7 +56,7 @@ public class RoleService {
             case TEST:
                 return generateTesterPermissions();
         }
-        return new ArrayList<>(); // Return an empty list if the roleType is not recognized.
+        return new ArrayList<>();
     }
 
     private List<Permissions> generateAdminPermissions() {

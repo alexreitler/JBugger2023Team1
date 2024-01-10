@@ -29,8 +29,6 @@ public class Users {
     private String password;
     private boolean status;
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<User_Notification> user_notifications = new ArrayList<>();
 
     @OneToMany(mappedBy = "userCreated", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bugs> bug_created = new ArrayList<>();

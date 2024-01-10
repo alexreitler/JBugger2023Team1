@@ -75,7 +75,7 @@ public class AuthenticationService {
                 )
         );
         var user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(); //todo handle exceptions
+                .orElseThrow();
 
         var jwtToken = jwtService.generateToken((UserDetails) user);
         eventPublisher.publishEvent(Login.builder()
@@ -113,7 +113,7 @@ public class AuthenticationService {
     }
 
     private String generatePassword() {
-        List<String> letters = Arrays.asList(
+        List<String> characters = Arrays.asList(
                 "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
                 "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
                 "!", "@", "#", "$", "%", "&", "*", "?", "!",
@@ -123,7 +123,7 @@ public class AuthenticationService {
         Random rand = new Random();
         for (int i = 0; i < 31; i++)
         {
-            String randomElement = letters.get(rand.nextInt(letters.size()));
+            String randomElement = characters.get(rand.nextInt(characters.size()));
             pass.append(randomElement);
         }
         System.out.println(pass);
