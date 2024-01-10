@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
+@Service
+@Transactional
 public class BugService {
     private final BugsRepository bugRepository;
     private final UsersRepository userRepository;
@@ -51,7 +53,6 @@ public class BugService {
                 .filter(bug -> request.getAssignedToUsername() == null || bug.getUserAssigned().getUsername().equals(request.getAssignedToUsername()))
                 .toList();
 
-        // Get the bugs that are on the requested page
         int offset = request.getPageNumber() * request.getPageSize();
         int totalNumberOfBugs = sortedAndFilteredBugs.size();
         int totalPages = (int) Math.ceil((double) totalNumberOfBugs / request.getPageSize());
@@ -61,49 +62,38 @@ public class BugService {
                 .limit(request.getPageSize())
                 .toList();
 
-        // Convert the bugs to BugAttributes objects
         List<BugAttributes> resultingItems = bugsOnPage.stream()
                 .map(BugAttributes::fromBug)
                 .toList();
 
-        // Create and return the response
         return SearchResponse.builder()
                 .items(resultingItems)
                 .build();
     }
 
-    public BugContent addBug(String username, BugAddRequest request) {
+    public BugContent addBug(String username, BugAddRequest request)
+    {
 
-        // todo: verify transactional behavior (if the bug is not saved, the attachment should not be saved either)
-        // todo: validation and error handling
-
-        // Save the bug and attachment to the database
         var bug = saveBug(username, request);
         saveAttachment(bug.getIdBug(), request.getAttachmentContent());
 
-        // Return the bug content
         return BugContent.fromBug(bug);
     }
 
     public BugContent updateBug(long bugId, BugUpdateRequest request) {
-        // Update the bug in the database
         var previousBugStatus = bugRepository.findById(bugId).orElseThrow().getStatus();
         Bugs bug = overrideBug(bugId, request);
 
-        // Add history entry
         saveHistory(previousBugStatus, bug);
 
-        // Return the bug content
         return BugContent.fromBug(bug);
     }
 
     public BugContent closeBug(long bugId) {
-        // We can close the bug by updating the bug status to CLOSED
         return updateBugStatus(bugId, new StatusUpdateRequest(BugStatus.Closed));
     }
 
     public BugContent updateBugStatus(long bugId, StatusUpdateRequest request) {
-        // We can update the bug status by updating the whole bug and changing only the status
         var bugUpdateRequest = BugUpdateRequest.builder()
                 .status(request.getStatus())
                 .build();
@@ -111,27 +101,21 @@ public class BugService {
     }
 
     public ContentAttachment addAttachment(long bugId, BugAddAttachmentRequest request) {
-        // Save the attachment to the database
         var attachment = saveAttachment(bugId, request.getAttachmentContent());
 
-        // Return the attachment content
         return ContentAttachment.fromAttachment(attachment);
     }
 
     public void deleteAttachment(long bugId, long attachmentId) {
-        // Get the attachment from the database
         var attachment = attachmentRepository.findById(attachmentId).orElseThrow();
 
-        // Check if the attachment belongs to the bug
         if (attachment.getBug().getIdBug() != bugId)
             throw new RuntimeException("The attachment does not belong to the bug.");
 
-        // Delete the attachment from the database
         attachmentRepository.delete(attachment);
     }
 
     Bugs saveBug(String username, BugAddRequest request) {
-        // Create a new bug and set its independent attributes
         var bug = new Bugs();
         bug.setTitle(request.getTitle());
         bug.setDescription(request.getDescription());
@@ -141,23 +125,19 @@ public class BugService {
         bug.setStatus(BugStatus.Open);
         bug.setSeverity(request.getSeverity());
 
-        // Search for the reporter and assignee in the database
         var createdBy = userRepository.findByUsername(username).orElseThrow();
         var assignedTo = userRepository.findByUsername(request.getAssignedToUsername()).orElseThrow();
 
         bug.setUserCreated(createdBy);
         bug.setUserAssigned(assignedTo);
 
-        // Save the bug to the database
         bug = bugRepository.save(bug);
         return bug;
     }
 
     Attachments saveAttachment(long bugId, byte[] attCont) {
-        // Get the bug from the database
         var bug = bugRepository.findById(bugId).orElseThrow();
 
-        // Create a new attachment
         var attachment = new Attachments();
         attachment.setAttContent(attCont);
         attachment.setBug(bug);
@@ -182,12 +162,9 @@ public class BugService {
     }
 
     Bugs overrideBug(long bugId, BugUpdateRequest request) {
-
-        // Find the assignee in the database
         var assignee = request.getAssignedToUsername() == null ? null :
                 userRepository.findByUsername(request.getAssignedToUsername()).orElseThrow();
-
-        // Edit the bug
+        
         var bug = bugRepository.findById(bugId).orElseThrow();
 
         if (request.getTitle() != null)

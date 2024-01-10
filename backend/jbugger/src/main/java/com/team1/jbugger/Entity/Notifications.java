@@ -23,10 +23,6 @@ public class Notifications {
     private String UrlOrBugId;
     private String message;
 
-
-    @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<User_Notification> user_notifications = new ArrayList<>();
-
     @ManyToMany(
             targetEntity = Users.class,
             mappedBy = "notifications"

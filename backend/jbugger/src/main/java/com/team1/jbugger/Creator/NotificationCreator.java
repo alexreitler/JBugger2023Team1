@@ -3,10 +3,12 @@ package com.team1.jbugger.Creator;
 import com.team1.jbugger.Entity.*;
 import com.team1.jbugger.Enums.*;
 import com.team1.jbugger.User_call_helper.User_Information;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.HashSet;
 
+@Component
 public class NotificationCreator
 {
     public Notifications createWelcomeNotification(Users receiver) {

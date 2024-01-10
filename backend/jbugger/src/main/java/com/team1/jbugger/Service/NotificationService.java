@@ -103,10 +103,10 @@ public class NotificationService {
 
         return usersWithRole;
     }
-    @Scheduled(cron = "0 0 0 * * *")
-    public void deleteOldNotifications() {
-        LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
-        List<Notifications> notificationsToDelete = notificationRepository.findByCreatedTimeBefore(thirtyDaysAgo);
-        notificationRepository.deleteAll(notificationsToDelete);
-    }
+//    @Scheduled(cron = "0 0 0 * * *")
+//    public void deleteOldNotifications() {
+//        LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
+//        List<Notifications> notificationsToDelete = notificationRepository.findByCreatedTimeBefore(thirtyDaysAgo);
+//        notificationRepository.deleteAll(notificationsToDelete);
+//    }
 }

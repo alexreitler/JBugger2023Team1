@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface NotificationsRepository extends JpaRepository<Notifications, Long> {
-    List<Notifications> findByCreatedTimeBefore(LocalDateTime date);
+    //List<Notifications> findByCreatedTimeBefore(LocalDateTime date);
 }

@@ -1,10 +1,7 @@
 package com.team1.jbugger.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +11,7 @@ import java.util.*;
 
 @Entity
 @Getter
+@Builder
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,8 +29,8 @@ public class Users {
     private String password;
     private boolean status;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<User_Notification> user_notifications = new ArrayList<>();
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<User_Notification> user_notifications = new ArrayList<>();
 
     @OneToMany(mappedBy = "userCreated", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bugs> bug_created = new ArrayList<>();
@@ -70,9 +68,6 @@ public class Users {
         this.status = status;
     }
 
-//    public void setNotifications(List<User_Notification> user_notifications) {
-//        this.user_notifications = user_notifications;
-//    }
 
     public void setBug_created(List<Bugs> bug_created) {
         this.bug_created = bug_created;
