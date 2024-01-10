@@ -1,6 +1,5 @@
 package com.team1.jbugger.Authentication;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Request {
-
-    private String username;
-    private String password;
+public class AuthenticationResponse {
+    private String token;
 }

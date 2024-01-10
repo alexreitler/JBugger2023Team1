@@ -11,13 +11,11 @@ import com.team1.jbugger.Enums.*;
 import com.team1.jbugger.Repository.*;
 import com.team1.jbugger.Events.Login;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import java.util.*;
 
@@ -35,7 +33,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public Response register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request) {
         if (checkPhoneNumberFormat(request.getMobileNumber()) && checkEmailFormat(request.getEmail())) {
             String generatedPass = generatePassword();
             String encodedPass = passwordEncoder.encode(generatedPass);
@@ -51,7 +49,7 @@ public class AuthenticationService {
                     .build();
             userRepository.save(user);
             var jwtToken = jwtService.generateToken((UserDetails) user);
-            return Response
+            return AuthenticationResponse
                     .builder()
                     .token(jwtToken)
                     .build();
@@ -69,7 +67,7 @@ public class AuthenticationService {
         return roles;
     }
 
-    public Response authenticate(Request request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
@@ -83,7 +81,7 @@ public class AuthenticationService {
         eventPublisher.publishEvent(Login.builder()
                 .loggedUser(user)
                 .build());
-        return Response
+        return AuthenticationResponse
                 .builder()
                 .token(jwtToken)
                 .build();
