@@ -47,7 +47,6 @@ public class UsersController {
         try {
             return ResponseEntity.ok(userService.update(username, request, SecurityContextHolder.getContext().getAuthentication().getName()));
         } catch (Exception e) {
-            // Handle the exception as needed
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -57,7 +56,6 @@ public class UsersController {
         try {
             return ResponseEntity.ok(userService.deactivate(username));
         } catch (Exception e) {
-            // Handle the exception as needed
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -73,7 +71,6 @@ public class UsersController {
 
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception ex) {
-            // Handle the exception as needed
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

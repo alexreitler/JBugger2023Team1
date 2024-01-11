@@ -58,11 +58,8 @@ public class BugController {
                 .description(Objects.equals(description, "") ? null : description)
                 .version(Objects.equals(version, "") ? null : version)
                 .targetDate(null)
-                //.status(BugStatus.valueOf(status))
                 .status(null)
                 .fixedVersion(Objects.equals(fixedRevision, "") ? null : fixedRevision)
-                //.targetDate(new SimpleDateFormat("MM-dd-yyyy").parse(targetDate))
-                //.severity(BugSeverity.valueOf(severity))
                 .severity(null)
                 .CreatedByUsername(Objects.equals(reporterUsername, "") ? null : reporterUsername)
                 .AssignedToUsername(Objects.equals(assigneeUsername, "") ? null : assigneeUsername)
@@ -103,9 +100,9 @@ public class BugController {
     }
 
 
-    @DeleteMapping("/deleteAttachment/{bugId}/{idAttachment}")
-    public ResponseEntity<Void> deleteAttachment(@PathVariable long bugId, @PathVariable long idAttachment) {
-        bugService.deleteAttachment(bugId, idAttachment);
+    @DeleteMapping("/deleteAttachment/{idBug}/{idAttachment}")
+    public ResponseEntity<Void> deleteAttachment(@PathVariable long idBug, @PathVariable long idAttachment) {
+        bugService.deleteAttachment(idBug, idAttachment);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
